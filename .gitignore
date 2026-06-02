@@ -39,3 +39,6 @@ docs/
 .vscode/
 # local recovery archives (not part of the project)
 public/Recovered-*.zip
+
+# build info
+tsconfig.tsbuildinfo
