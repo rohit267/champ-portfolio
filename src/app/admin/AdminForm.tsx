@@ -1,0 +1,382 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type { PortfolioContent } from "@/types/portfolio";
+
+type SaveState = "idle" | "saving" | "saved" | "error";
+
+export function AdminForm({ initial }: { initial: PortfolioContent }) {
+	const router = useRouter();
+	const [data, setData] = useState<PortfolioContent>(initial);
+	const [state, setState] = useState<SaveState>("idle");
+	const [message, setMessage] = useState("");
+
+	function update(mutator: (draft: PortfolioContent) => void) {
+		setData((prev) => {
+			const next = structuredClone(prev);
+			mutator(next);
+			return next;
+		});
+	}
+
+	async function save() {
+		setState("saving");
+		setMessage("");
+		const res = await fetch("/api/admin/content", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		});
+		if (res.ok) {
+			setState("saved");
+			setMessage("Saved. Public site + chat updated.");
+			router.refresh();
+		} else {
+			const body = await res.json().catch(() => ({}));
+			setState("error");
+			setMessage(body.errors?.join("; ") || body.error || "Save failed.");
+		}
+	}
+
+	async function logout() {
+		await fetch("/api/admin/logout", { method: "POST" });
+		router.push("/admin/login");
+	}
+
+	const field = "w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none focus:border-accent";
+	const label = "text-xs font-medium text-muted";
+
+	return (
+		<main className="mx-auto flex max-w-3xl flex-col gap-8 px-6 py-10">
+			<div className="flex items-center justify-between">
+				<h1 className="text-2xl font-semibold">Edit portfolio</h1>
+				<div className="flex items-center gap-3">
+					<button type="button" onClick={logout} className="text-sm text-muted hover:text-fg">
+						Log out
+					</button>
+					<button
+						type="button"
+						onClick={save}
+						disabled={state === "saving"}
+						className="rounded-lg bg-accent px-4 py-2 text-sm text-white disabled:opacity-50"
+					>
+						{state === "saving" ? "Saving…" : "Save"}
+					</button>
+				</div>
+			</div>
+			{message ? (
+				<p className={state === "error" ? "text-sm text-red-500" : "text-sm text-green-600"}>{message}</p>
+			) : null}
+
+			{/* Profile */}
+			<fieldset className="flex flex-col gap-3">
+				<legend className="mb-2 text-lg font-medium">Profile</legend>
+				{(["name", "role", "email", "avatar", "location"] as const).map((key) => (
+					<label key={key} className="flex flex-col gap-1">
+						<span className={label}>{key}</span>
+						<input
+							className={field}
+							value={data.person[key]}
+							onChange={(e) =>
+								update((d) => {
+									d.person[key] = e.target.value;
+								})
+							}
+						/>
+					</label>
+				))}
+			</fieldset>
+
+			{/* About */}
+			<fieldset className="flex flex-col gap-2">
+				<legend className="mb-2 text-lg font-medium">About</legend>
+				<textarea
+					className={`${field} min-h-28`}
+					value={data.about.intro}
+					onChange={(e) =>
+						update((d) => {
+							d.about.intro = e.target.value;
+						})
+					}
+				/>
+			</fieldset>
+
+			{/* Social */}
+			<ArrayEditor
+				legend="Social links"
+				items={data.social}
+				onAdd={() =>
+					update((d) => {
+						d.social.push({ name: "", icon: "github", link: "" });
+					})
+				}
+				onRemove={(i) =>
+					update((d) => {
+						d.social.splice(i, 1);
+					})
+				}
+				render={(s, i) => (
+					<div className="grid grid-cols-3 gap-2">
+						{(["name", "icon", "link"] as const).map((k) => (
+							<input
+								key={k}
+								className={field}
+								placeholder={k}
+								value={s[k]}
+								onChange={(e) =>
+									update((d) => {
+										d.social[i][k] = e.target.value;
+									})
+								}
+							/>
+						))}
+					</div>
+				)}
+			/>
+
+			{/* Skills */}
+			<ArrayEditor
+				legend="Skills"
+				items={data.skills}
+				onAdd={() =>
+					update((d) => {
+						d.skills.push({ title: "", description: "", tags: [] });
+					})
+				}
+				onRemove={(i) =>
+					update((d) => {
+						d.skills.splice(i, 1);
+					})
+				}
+				render={(sk, i) => (
+					<div className="flex flex-col gap-2">
+						<input
+							className={field}
+							placeholder="title"
+							value={sk.title}
+							onChange={(e) =>
+								update((d) => {
+									d.skills[i].title = e.target.value;
+								})
+							}
+						/>
+						<textarea
+							className={`${field} min-h-16`}
+							placeholder="description"
+							value={sk.description}
+							onChange={(e) =>
+								update((d) => {
+									d.skills[i].description = e.target.value;
+								})
+							}
+						/>
+						<input
+							className={field}
+							placeholder="tags (comma separated)"
+							value={sk.tags.map((t) => t.name).join(", ")}
+							onChange={(e) =>
+								update((d) => {
+									d.skills[i].tags = e.target.value
+										.split(",")
+										.map((t) => t.trim())
+										.filter(Boolean)
+										.map((name) => ({ name, icon: "rocket" }));
+								})
+							}
+						/>
+					</div>
+				)}
+			/>
+
+			{/* Experience */}
+			<ArrayEditor
+				legend="Experience"
+				items={data.experience}
+				onAdd={() =>
+					update((d) => {
+						d.experience.push({ company: "", role: "", timeframe: "", achievements: [""] });
+					})
+				}
+				onRemove={(i) =>
+					update((d) => {
+						d.experience.splice(i, 1);
+					})
+				}
+				render={(exp, i) => (
+					<div className="flex flex-col gap-2">
+						{(["company", "role", "timeframe"] as const).map((k) => (
+							<input
+								key={k}
+								className={field}
+								placeholder={k}
+								value={exp[k]}
+								onChange={(e) =>
+									update((d) => {
+										d.experience[i][k] = e.target.value;
+									})
+								}
+							/>
+						))}
+						<textarea
+							className={`${field} min-h-20`}
+							placeholder="achievements (one per line)"
+							value={exp.achievements.join("\n")}
+							onChange={(e) =>
+								update((d) => {
+									d.experience[i].achievements = e.target.value.split("\n");
+								})
+							}
+						/>
+					</div>
+				)}
+			/>
+
+			{/* Projects */}
+			<ArrayEditor
+				legend="Projects"
+				items={data.projects}
+				onAdd={() =>
+					update((d) => {
+						d.projects.push({ title: "", description: "", tags: [], links: [] });
+					})
+				}
+				onRemove={(i) =>
+					update((d) => {
+						d.projects.splice(i, 1);
+					})
+				}
+				render={(p, i) => (
+					<div className="flex flex-col gap-2">
+						<input
+							className={field}
+							placeholder="title"
+							value={p.title}
+							onChange={(e) =>
+								update((d) => {
+									d.projects[i].title = e.target.value;
+								})
+							}
+						/>
+						<textarea
+							className={`${field} min-h-20`}
+							placeholder="description (markdown)"
+							value={p.description}
+							onChange={(e) =>
+								update((d) => {
+									d.projects[i].description = e.target.value;
+								})
+							}
+						/>
+						<input
+							className={field}
+							placeholder="tags (comma separated)"
+							value={p.tags.join(", ")}
+							onChange={(e) =>
+								update((d) => {
+									d.projects[i].tags = e.target.value
+										.split(",")
+										.map((t) => t.trim())
+										.filter(Boolean);
+								})
+							}
+						/>
+						<input
+							className={field}
+							placeholder="link url"
+							value={p.links[0]?.url ?? ""}
+							onChange={(e) =>
+								update((d) => {
+									d.projects[i].links = e.target.value ? [{ label: "Link", url: e.target.value }] : [];
+								})
+							}
+						/>
+					</div>
+				)}
+			/>
+
+			{/* Education */}
+			<ArrayEditor
+				legend="Education"
+				items={data.education}
+				onAdd={() =>
+					update((d) => {
+						d.education.push({ name: "", description: "" });
+					})
+				}
+				onRemove={(i) =>
+					update((d) => {
+						d.education.splice(i, 1);
+					})
+				}
+				render={(ed, i) => (
+					<div className="flex flex-col gap-2">
+						<input
+							className={field}
+							placeholder="name"
+							value={ed.name}
+							onChange={(e) =>
+								update((d) => {
+									d.education[i].name = e.target.value;
+								})
+							}
+						/>
+						<input
+							className={field}
+							placeholder="description"
+							value={ed.description}
+							onChange={(e) =>
+								update((d) => {
+									d.education[i].description = e.target.value;
+								})
+							}
+						/>
+					</div>
+				)}
+			/>
+		</main>
+	);
+}
+
+function ArrayEditor<T>({
+	legend,
+	items,
+	render,
+	onAdd,
+	onRemove,
+}: {
+	legend: string;
+	items: T[];
+	render: (item: T, index: number) => React.ReactNode;
+	onAdd: () => void;
+	onRemove: (index: number) => void;
+}) {
+	return (
+		<fieldset className="flex flex-col gap-3">
+			<div className="flex items-center justify-between">
+				<legend className="text-lg font-medium">{legend}</legend>
+				<button
+					type="button"
+					onClick={onAdd}
+					className="rounded-lg border border-border px-3 py-1 text-sm hover:bg-card"
+				>
+					+ Add
+				</button>
+			</div>
+			{items.map((item, i) => (
+				<div key={i} className="rounded-xl border border-border p-3">
+					<div className="mb-2 flex justify-end">
+						<button
+							type="button"
+							onClick={() => onRemove(i)}
+							className="text-xs text-red-500 hover:underline"
+						>
+							Remove
+						</button>
+					</div>
+					{render(item, i)}
+				</div>
+			))}
+		</fieldset>
+	);
+}
