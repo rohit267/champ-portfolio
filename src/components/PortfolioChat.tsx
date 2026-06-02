@@ -229,7 +229,7 @@ export function PortfolioChat() {
 								key={message.id}
 								className={
 									message.role === "user"
-										? "ml-auto max-w-[85%] rounded-2xl bg-accent px-3 py-2 text-sm text-white"
+										? "ml-auto max-w-[85%] rounded-2xl bg-accent px-3 py-2 text-sm text-on-accent"
 										: "mr-auto max-w-[85%] rounded-2xl bg-card px-3 py-2 text-sm text-fg"
 								}
 							>
@@ -277,7 +277,7 @@ export function PortfolioChat() {
 							type="submit"
 							disabled={isLoading || !question.trim()}
 							aria-label="Send question"
-							className="rounded-full bg-accent p-2 text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+							className="rounded-full bg-accent p-2 text-on-accent transition-opacity hover:opacity-90 disabled:opacity-50"
 						>
 							<FiSend aria-hidden />
 						</button>
@@ -290,7 +290,7 @@ export function PortfolioChat() {
 				aria-label="Open portfolio chat"
 				aria-expanded={isOpen}
 				onClick={() => setIsOpen((currentValue) => !currentValue)}
-				className="flex h-14 w-14 items-center justify-center self-end rounded-full bg-accent text-white shadow-lg transition-opacity hover:opacity-90"
+				className="flex h-14 w-14 items-center justify-center self-end rounded-full bg-accent text-on-accent shadow-lg transition-opacity hover:opacity-90"
 			>
 				{isOpen ? <FiX size={22} aria-hidden /> : <FiMessageCircle size={22} aria-hidden />}
 			</button>

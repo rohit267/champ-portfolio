@@ -68,7 +68,7 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 						type="button"
 						onClick={save}
 						disabled={state === "saving"}
-						className="rounded-lg bg-accent px-4 py-2 text-sm text-white disabled:opacity-50"
+						className="rounded-lg bg-accent px-4 py-2 text-sm text-on-accent disabled:opacity-50"
 					>
 						{state === "saving" ? "Saving…" : "Save"}
 					</button>

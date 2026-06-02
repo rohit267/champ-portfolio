@@ -31,7 +31,7 @@ export default function AdminLogin() {
 					placeholder="Password"
 					className="rounded-lg border border-border bg-bg px-3 py-2 outline-none focus:border-accent"
 				/>
-				<button type="submit" className="rounded-lg bg-accent px-4 py-2 text-white">
+				<button type="submit" className="rounded-lg bg-accent px-4 py-2 text-on-accent">
 					Log in
 				</button>
 				{error ? <p className="text-sm text-red-500">{error}</p> : null}
