@@ -49,6 +49,15 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 
 	return (
 		<main className="mx-auto flex max-w-3xl flex-col gap-8 px-6 py-10">
+			<datalist id="project-link-labels">
+				<option value="GitHub" />
+				<option value="Live Demo" />
+				<option value="Website" />
+				<option value="Play Store" />
+				<option value="App Store" />
+				<option value="Documentation" />
+				<option value="Video" />
+			</datalist>
 			<div className="flex items-center justify-between">
 				<h1 className="text-2xl font-semibold">Edit portfolio</h1>
 				<div className="flex items-center gap-3">
@@ -281,16 +290,59 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 								})
 							}
 						/>
-						<input
-							className={field}
-							placeholder="link url"
-							value={p.links[0]?.url ?? ""}
-							onChange={(e) =>
-								update((d) => {
-									d.projects[i].links = e.target.value ? [{ label: "Link", url: e.target.value }] : [];
-								})
-							}
-						/>
+						<div className="flex flex-col gap-2 rounded-lg border border-border p-2">
+							<div className="flex items-center justify-between">
+								<span className={label}>links</span>
+								<button
+									type="button"
+									className="rounded-md border border-border px-2 py-0.5 text-xs hover:bg-card"
+									onClick={() =>
+										update((d) => {
+											d.projects[i].links.push({ label: "", url: "" });
+										})
+									}
+								>
+									+ Add link
+								</button>
+							</div>
+							{p.links.map((lnk, j) => (
+								<div key={j} className="flex gap-2">
+									<input
+										className={`${field} w-40 shrink-0`}
+										list="project-link-labels"
+										placeholder="label"
+										value={lnk.label}
+										onChange={(e) =>
+											update((d) => {
+												d.projects[i].links[j].label = e.target.value;
+											})
+										}
+									/>
+									<input
+										className={field}
+										placeholder="https://…"
+										value={lnk.url}
+										onChange={(e) =>
+											update((d) => {
+												d.projects[i].links[j].url = e.target.value;
+											})
+										}
+									/>
+									<button
+										type="button"
+										aria-label="Remove link"
+										className="shrink-0 px-2 text-xs text-red-500 hover:underline"
+										onClick={() =>
+											update((d) => {
+												d.projects[i].links.splice(j, 1);
+											})
+										}
+									>
+										✕
+									</button>
+								</div>
+							))}
+						</div>
 					</div>
 				)}
 			/>

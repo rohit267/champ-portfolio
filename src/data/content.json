@@ -129,13 +129,19 @@
       "title": "Placeholder Project One",
       "description": "Replace this with a real project. Describe the problem, your role, and the impact. Markdown is supported.",
       "tags": ["Next.js", "LangChain", "RAG"],
-      "links": [{ "label": "GitHub", "url": "https://github.com/rohit267" }]
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/rohit267" },
+        { "label": "Live Demo", "url": "https://example.com" }
+      ]
     },
     {
       "title": "Placeholder Project Two",
       "description": "Replace this with a real project. Describe the problem, your role, and the impact. Markdown is supported.",
-      "tags": ["Node.js", "GraphQL", "MongoDB"],
-      "links": [{ "label": "GitHub", "url": "https://github.com/rohit267" }]
+      "tags": ["React Native", "Node.js", "MongoDB"],
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/rohit267" },
+        { "label": "Play Store", "url": "https://play.google.com" }
+      ]
     }
   ],
   "education": [

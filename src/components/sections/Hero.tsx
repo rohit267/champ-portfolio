@@ -15,7 +15,7 @@ export function Hero({ person, social }: Pick<PortfolioContent, "person" | "soci
 					className="rounded-full border border-border object-cover"
 				/>
 				<div className="flex flex-col gap-2">
-					<h1 className="text-3xl font-bold tracking-tight">{person.name}</h1>
+					<h1 className="text-3xl font-bold tracking-tight text-accent">{person.name}</h1>
 					<p className="text-muted">{person.role}</p>
 					<div className="mt-2 flex flex-wrap items-center gap-3">
 						<SocialLinks social={social} />

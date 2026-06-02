@@ -9,7 +9,8 @@
   --muted: #6b7280;
   --card: #f7f7f8;
   --border: #e5e7eb;
-  --accent: #2563eb;
+  --accent: #0d9488;
+  --accent-soft: #f0fdfa;
 }
 
 .dark {
@@ -18,7 +19,8 @@
   --muted: #9ca3af;
   --card: #141417;
   --border: #26262b;
-  --accent: #60a5fa;
+  --accent: #2dd4bf;
+  --accent-soft: #0f2a26;
 }
 
 @theme inline {
@@ -28,6 +30,7 @@
   --color-card: var(--card);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
 }
 
 html {

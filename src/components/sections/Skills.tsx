@@ -3,7 +3,7 @@ import type { SkillGroup } from "@/types/portfolio";
 
 export function Skills({ skills }: { skills: SkillGroup[] }) {
 	return (
-		<Section id="skills" title="Skills">
+		<Section id="skills" title="Skills" tinted>
 			<div className="flex flex-col gap-6">
 				{skills.map((group) => (
 					<div key={group.title}>
@@ -13,7 +13,7 @@ export function Skills({ skills }: { skills: SkillGroup[] }) {
 							{group.tags.map((tag) => (
 								<span
 									key={tag.name}
-									className="rounded-full border border-border bg-card px-3 py-1 text-xs text-fg"
+									className="rounded-full border border-accent/30 bg-accent-soft px-3 py-1 text-xs font-medium text-accent"
 								>
 									{tag.name}
 								</span>
