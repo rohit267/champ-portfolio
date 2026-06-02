@@ -1,15 +1,12 @@
-import { Column, Heading, Text } from "@once-ui-system/core";
-
 export default function NotFound() {
-  return (
-    <Column as="section" fill center paddingBottom="160">
-      <Text marginBottom="s" variant="display-strong-xl">
-        404
-      </Text>
-      <Heading marginBottom="l" variant="display-default-xs">
-        Page Not Found
-      </Heading>
-      <Text onBackground="neutral-weak">The page you are looking for does not exist.</Text>
-    </Column>
-  );
+	return (
+		<main className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center gap-2 px-6 text-center">
+			<p className="text-5xl font-bold">404</p>
+			<h1 className="text-xl font-semibold">Page not found</h1>
+			<p className="text-muted">The page you are looking for does not exist.</p>
+			<a href="/" className="mt-4 rounded-full bg-accent px-4 py-2 text-sm text-white hover:opacity-90">
+				Back home
+			</a>
+		</main>
+	);
 }
