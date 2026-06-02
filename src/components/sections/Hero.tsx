@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FiDownload } from "react-icons/fi";
+import { FiDownload, FiMapPin } from "react-icons/fi";
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import type { PortfolioContent } from "@/types/portfolio";
 
@@ -17,6 +17,12 @@ export function Hero({ person, social }: Pick<PortfolioContent, "person" | "soci
 				<div className="flex flex-col gap-2">
 					<h1 className="text-3xl font-bold tracking-tight text-accent">{person.name}</h1>
 					<p className="text-muted">{person.role}</p>
+					{person.location ? (
+						<p className="flex items-center gap-1.5 text-sm text-muted">
+							<FiMapPin size={14} className="text-accent" />
+							{person.location}
+						</p>
+					) : null}
 					<div className="mt-2 flex flex-wrap items-center gap-3">
 						<SocialLinks social={social} />
 						<a

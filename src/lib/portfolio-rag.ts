@@ -195,7 +195,7 @@ async function buildPortfolioDocuments(requestId: string): Promise<Document[]> {
 					`Name: ${person.name}`,
 					`Role: ${person.role}`,
 					`Email: ${person.email}`,
-					`Location/time zone: ${person.location}`,
+					`Location: ${person.location}`,
 					`Languages: ${person.languages?.join(", ") || "Not listed"}`,
 					`Introduction: ${about.intro}`,
 				].join("\n"),
