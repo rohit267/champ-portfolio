@@ -1,0 +1,146 @@
+{
+  "person": {
+    "firstName": "Rohit",
+    "lastName": "Mahto",
+    "name": "Rohit Mahto",
+    "role": "Sr. Full Stack AI Engineer",
+    "avatar": "/images/avatar.jpg",
+    "email": "rohit@champdev.me",
+    "location": "Asia/Kolkata",
+    "languages": ["English", "Hindi"]
+  },
+  "social": [
+    { "name": "GitHub", "icon": "github", "link": "https://github.com/rohit267" },
+    { "name": "LinkedIn", "icon": "linkedin", "link": "https://www.linkedin.com/in/rohit-mahto-489526149/" },
+    { "name": "Email", "icon": "email", "link": "mailto:rohit@champdev.me" }
+  ],
+  "about": {
+    "intro": "Rohit is a Sr. Full Stack AI Engineer with expertise in building production web applications, generative AI experiences, agentic workflows, RAG chatbots, and API-driven platforms. He combines Next.js, Angular, Node.js, GraphQL, MongoDB, and payment integrations with modern AI tooling such as LangChain, OpenAI-compatible APIs, and Ollama."
+  },
+  "skills": [
+    {
+      "title": "Generative & Agentic AI",
+      "description": "Build AI-powered product experiences, RAG pipelines, chatbot backends, and agentic workflows with production-oriented API integration.",
+      "tags": [
+        { "name": "Generative AI", "icon": "openai" },
+        { "name": "Agentic AI", "icon": "langchain" },
+        { "name": "RAG", "icon": "langchain" },
+        { "name": "LangChain", "icon": "langchain" },
+        { "name": "OpenAI APIs", "icon": "openai" },
+        { "name": "Ollama", "icon": "ollama" },
+        { "name": "Hugging Face", "icon": "huggingface" },
+        { "name": "Vector Search", "icon": "database" },
+        { "name": "Prompt Engineering", "icon": "rocket" }
+      ]
+    },
+    {
+      "title": "Full Stack Engineering",
+      "description": "Build scalable web applications, APIs, dashboards, and integrations with modern TypeScript-first engineering practices.",
+      "tags": [
+        { "name": "Next.js", "icon": "nextjs" },
+        { "name": "React.js", "icon": "react" },
+        { "name": "Node.js", "icon": "nodejs" },
+        { "name": "TypeScript", "icon": "typescript" },
+        { "name": "JavaScript", "icon": "javascript" },
+        { "name": "GraphQL", "icon": "graphql" },
+        { "name": "MongoDB", "icon": "mongodb" },
+        { "name": "MySQL", "icon": "mysql" },
+        { "name": "Redis", "icon": "redis" },
+        { "name": "Socket.io", "icon": "socketdotio" },
+        { "name": "PHP", "icon": "php" }
+      ]
+    },
+    {
+      "title": "Mobile Development",
+      "description": "Experience building cross-platform and native mobile applications that connect to production backend systems.",
+      "tags": [
+        { "name": "Android Studio", "icon": "android" },
+        { "name": "Java", "icon": "java" },
+        { "name": "React Native", "icon": "react" }
+      ]
+    },
+    {
+      "title": "DevOps & Delivery",
+      "description": "Ship and operate applications with practical CI/CD, container, and server deployment experience.",
+      "tags": [
+        { "name": "Git", "icon": "git" },
+        { "name": "GitHub", "icon": "github" },
+        { "name": "Bitbucket", "icon": "bitbucket" },
+        { "name": "Docker", "icon": "docker" },
+        { "name": "Jenkins", "icon": "jenkins" },
+        { "name": "Nginx", "icon": "nginx" }
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Techolution",
+      "role": "Sr. Full Stack AI Engineer",
+      "timeframe": "Mar 2022 - Present",
+      "achievements": [
+        "Develop and maintain full-stack internal tools using Angular, Node.js, GraphQL, and MongoDB.",
+        "Build AI-enabled workflows, RAG-backed assistants, and OpenAI-compatible API integrations for product experiences.",
+        "Write clean, well-documented code following best practices.",
+        "Collaborate with US clients in daily standup meetings to align on project goals."
+      ]
+    },
+    {
+      "company": "TechChefz",
+      "role": "Full Stack Developer",
+      "timeframe": "Apr 2021 - Feb 2022",
+      "achievements": [
+        "Built and maintained client requirements using Next.js and Node.js.",
+        "Improved page performance by 20% through optimization techniques.",
+        "Integrated payment gateways including Razorpay, Paytm, and UPI with DBS Bank."
+      ]
+    },
+    {
+      "company": "Team UDAAN",
+      "role": "Technical Head",
+      "timeframe": "Jan 2020 - Mar 2021",
+      "achievements": [
+        "Redesigned and developed a new student portal using React.js.",
+        "Built backend systems for REC Student Portal Android app and website using PHP and MySQL.",
+        "Designed and developed front-end and backend for college events like Quizathon and Gusto.",
+        "Mentored a team of 30+ students."
+      ]
+    },
+    {
+      "company": "TechChefz",
+      "role": "Front-end Developer Intern",
+      "timeframe": "Oct 2020 - Dec 2020",
+      "achievements": [
+        "Built and maintained client requirements using Next.js.",
+        "Implemented Paytm payment gateway integration."
+      ]
+    },
+    {
+      "company": "Bins Computer",
+      "role": "Web Developer Intern",
+      "timeframe": "Jun 2020 - Jul 2020",
+      "achievements": [
+        "Developed front-end for Sarvekshan using HTML, CSS, and jQuery.",
+        "Built backend for Sarvekshan using PHP and MySQL."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Placeholder Project One",
+      "description": "Replace this with a real project. Describe the problem, your role, and the impact. Markdown is supported.",
+      "tags": ["Next.js", "LangChain", "RAG"],
+      "links": [{ "label": "GitHub", "url": "https://github.com/rohit267" }]
+    },
+    {
+      "title": "Placeholder Project Two",
+      "description": "Replace this with a real project. Describe the problem, your role, and the impact. Markdown is supported.",
+      "tags": ["Node.js", "GraphQL", "MongoDB"],
+      "links": [{ "label": "GitHub", "url": "https://github.com/rohit267" }]
+    }
+  ],
+  "education": [
+    { "name": "Ramgarh Engineering College, Ramgarh", "description": "B.Tech in Computer Science & Engineering, CGPA: 7.96." },
+    { "name": "DAV Public School, Koyla Nagar", "description": "CBSE Intermediate (Science), Score: 70.67%." },
+    { "name": "DAV Public School, Barora", "description": "CBSE Matriculation, CGPA: 8.4." }
+  ]
+}
