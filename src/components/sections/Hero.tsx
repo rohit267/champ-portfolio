@@ -25,12 +25,16 @@ export function Hero({ person, social }: Pick<PortfolioContent, "person" | "soci
 					) : null}
 					<div className="mt-2 flex flex-wrap items-center gap-3">
 						<SocialLinks social={social} />
-						<a
-							href="/resume.pdf"
-							className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-medium text-on-accent transition-opacity hover:opacity-90"
-						>
-							<FiDownload size={16} /> Download Resume
-						</a>
+						{person.resumeUrl ? (
+							<a
+								href={person.resumeUrl}
+								target="_blank"
+								rel="noreferrer"
+								className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-medium text-on-accent transition-opacity hover:opacity-90"
+							>
+								<FiDownload size={16} /> Download Resume
+							</a>
+						) : null}
 					</div>
 				</div>
 			</div>

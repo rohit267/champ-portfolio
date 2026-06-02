@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/JsonLd";
 import { About } from "@/components/sections/About";
 import { Education } from "@/components/sections/Education";
 import { Experience } from "@/components/sections/Experience";
@@ -12,6 +13,7 @@ export default async function Home() {
 	const content = await getContent();
 	return (
 		<>
+			<JsonLd content={content} />
 			<Nav name={content.person.name} />
 			<main>
 				<Hero person={content.person} social={content.social} />

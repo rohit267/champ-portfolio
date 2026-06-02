@@ -15,6 +15,8 @@ export type Person = {
 	email: string;
 	location: string;
 	languages: string[];
+	/** Direct-download URL for the resume (e.g. a Google Drive / hosted PDF link). */
+	resumeUrl: string;
 };
 
 export type PortfolioContent = {

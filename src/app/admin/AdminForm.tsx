@@ -81,12 +81,12 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 			{/* Profile */}
 			<fieldset className="flex flex-col gap-3">
 				<legend className="mb-2 text-lg font-medium">Profile</legend>
-				{(["name", "role", "email", "avatar", "location"] as const).map((key) => (
+				{(["name", "role", "email", "avatar", "location", "resumeUrl"] as const).map((key) => (
 					<label key={key} className="flex flex-col gap-1">
-						<span className={label}>{key}</span>
+						<span className={label}>{key === "resumeUrl" ? "resume URL (direct download)" : key}</span>
 						<input
 							className={field}
-							value={data.person[key]}
+							value={data.person[key] ?? ""}
 							onChange={(e) =>
 								update((d) => {
 									d.person[key] = e.target.value;

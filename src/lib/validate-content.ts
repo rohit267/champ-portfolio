@@ -21,7 +21,7 @@ export function validateContent(data: unknown): Result {
 	if (!p || typeof p !== "object") {
 		errors.push("person is required");
 	} else {
-		for (const k of ["firstName", "lastName", "name", "role", "avatar", "email", "location"]) {
+		for (const k of ["firstName", "lastName", "name", "role", "avatar", "email", "location", "resumeUrl"]) {
 			if (!isStr(p[k])) errors.push(`person.${k} must be a string`);
 		}
 		if (!isStrArray(p.languages)) errors.push("person.languages must be a string[]");

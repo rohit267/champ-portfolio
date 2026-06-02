@@ -2,7 +2,7 @@
 
 A simple, single-page personal portfolio built with **Next.js + Tailwind CSS**, featuring:
 
-- Hero with social links (GitHub, LinkedIn, Email) and a resume download
+- Hero with social links (GitHub, LinkedIn, Email) and a resume download (direct link)
 - About, Skills, Experience, Projects, and Education sections
 - A **RAG-powered AI chat** that answers questions about Rohit (LangChain + Ollama)
 - A password-protected **`/admin` mini-CMS** to edit all content from the browser
@@ -27,8 +27,13 @@ Visit `http://localhost:3000`. The admin editor is at `/admin`.
 Copy `.env.example` to `.env` and set:
 
 - `ADMIN_PASSWORD` — guards `/admin` and the content save API
+- `NEXT_PUBLIC_BASE_URL` — your public domain; used for SEO canonical URLs, Open Graph,
+  sitemap, and robots
 - RAG provider settings (`RAG_PROVIDER`, `OLLAMA_BASE_URL`, `OLLAMA_MODEL`,
   `OLLAMA_EMBEDDING_MODEL`, or the OpenAI equivalents) — power the AI chat
+
+The resume button links to a direct-download URL you set in `/admin` (Profile → resume URL),
+e.g. a Google Drive or hosted PDF link — no file upload needed.
 
 The AI chat needs a reachable model/embedding provider; with the default Ollama setup,
 the configured server must be up and have the embedding model pulled.

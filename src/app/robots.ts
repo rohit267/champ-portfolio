@@ -1,12 +1,14 @@
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "https://rohit-portfolio.example.com";
+import { siteUrl } from "@/lib/site";
 
 export default function robots() {
 	return {
 		rules: [
 			{
 				userAgent: "*",
+				allow: "/",
+				disallow: "/admin",
 			},
 		],
-		sitemap: `${baseURL}/sitemap.xml`,
+		sitemap: `${siteUrl}/sitemap.xml`,
 	};
 }
