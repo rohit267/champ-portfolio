@@ -31,7 +31,7 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/pnpm-lock.yaml ./
 
 # Install only production dependencies
-RUN pnpm ci --only=production
+RUN pnpm install --frozen-lockfile --prod
 
 # Expose the port Next.js runs on (default: 3000)
 EXPOSE 3000
