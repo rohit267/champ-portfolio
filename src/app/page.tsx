@@ -9,6 +9,11 @@ import { Projects } from "@/components/sections/Projects";
 import { Skills } from "@/components/sections/Skills";
 import { getContent } from "@/lib/content";
 
+// content.json is read at runtime via fs and can change anytime (direct edit or
+// the /admin CMS). fs reads are invisible to Next.js's cache, so without this the
+// route is statically prerendered at build time and never reflects updates.
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
 	const content = await getContent();
 	return (
