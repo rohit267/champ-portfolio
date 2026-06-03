@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode (toggle adds/removes .dark on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #ffffff;
+  --fg: #0a0a0a;
+  --muted: #6b7280;
+  --card: #f7f7f8;
+  --border: #e5e7eb;
+  --accent: #0f766e;
+  --accent-soft: #f0fdfa;
+  --on-accent: #ffffff;
+}
+
+.dark {
+  --bg: #0a0a0b;
+  --fg: #f5f5f5;
+  --muted: #9ca3af;
+  --card: #141417;
+  --border: #26262b;
+  --accent: #2dd4bf;
+  --accent-soft: #0f2a26;
+  --on-accent: #042f2a;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
