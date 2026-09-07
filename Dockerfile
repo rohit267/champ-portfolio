@@ -29,6 +29,11 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/pnpm-lock.yaml ./
+# Seed content, read and rewritten at runtime by /admin. To persist edits across
+# container restarts, mount the DIRECTORY, not the file:
+#   -v ./data:/app/src/data          (works: saveContent renames within the dir)
+#   -v ./content.json:/app/src/data/content.json   (EBUSY: cannot rename over a mount)
+COPY --from=builder /app/src/data ./src/data
  
 RUN npm install -g pnpm@10
 # Install only production dependencies

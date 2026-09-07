@@ -32,12 +32,34 @@ function normalize(c: PortfolioContent): PortfolioContent {
 	return c;
 }
 
+/**
+ * rename() cannot replace a mount point. Docker single-file bind mounts
+ * (-v ./content.json:/app/src/data/content.json) therefore fail with EBUSY,
+ * and a mount whose backing store differs from the image layer can give EXDEV.
+ */
+function cannotReplaceByRename(err: unknown): boolean {
+	const code = (err as NodeJS.ErrnoException)?.code;
+	return code === "EBUSY" || code === "EXDEV" || code === "EPERM";
+}
+
 export async function saveContent(input: unknown): Promise<PortfolioContent> {
 	assertContent(input);
 	const data = normalize(structuredClone(input));
 	const serialized = `${JSON.stringify(data, null, 2)}\n`;
 	const tmp = `${contentPath}.tmp`;
 	await fs.writeFile(tmp, serialized, "utf8");
-	await fs.rename(tmp, contentPath);
+	try {
+		await fs.rename(tmp, contentPath);
+	} catch (err) {
+		if (!cannotReplaceByRename(err)) {
+			await fs.rm(tmp, { force: true });
+			throw err;
+		}
+		// Write through the mount instead of replacing it. Not atomic, so a crash
+		// mid-write can truncate the file; mount the directory, not the file, to
+		// keep the rename path. ponytail: no lock, single writer (one admin).
+		await fs.copyFile(tmp, contentPath);
+		await fs.rm(tmp, { force: true });
+	}
 	return data;
 }
