@@ -17,8 +17,24 @@ export async function getContent(): Promise<PortfolioContent> {
 	return data;
 }
 
-export async function saveContent(data: unknown): Promise<PortfolioContent> {
-	assertContent(data);
+/** Trim the free-text list fields an editor keeps verbatim while typing. */
+function normalize(c: PortfolioContent): PortfolioContent {
+	c.person.languages = c.person.languages.map((l) => l.trim()).filter(Boolean);
+	for (const group of c.skills) {
+		group.tags = group.tags.map((t) => ({ ...t, name: t.name.trim() })).filter((t) => t.name);
+	}
+	for (const project of c.projects) {
+		project.tags = project.tags.map((t) => t.trim()).filter(Boolean);
+	}
+	for (const exp of c.experience) {
+		exp.achievements = exp.achievements.map((a) => a.trim()).filter(Boolean);
+	}
+	return c;
+}
+
+export async function saveContent(input: unknown): Promise<PortfolioContent> {
+	assertContent(input);
+	const data = normalize(structuredClone(input));
 	const serialized = `${JSON.stringify(data, null, 2)}\n`;
 	const tmp = `${contentPath}.tmp`;
 	await fs.writeFile(tmp, serialized, "utf8");

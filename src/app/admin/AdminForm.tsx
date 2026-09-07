@@ -95,6 +95,18 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 						/>
 					</label>
 				))}
+				<label className="flex flex-col gap-1">
+					<span className={label}>languages (comma separated)</span>
+					<input
+						className={field}
+						value={data.person.languages.join(",")}
+						onChange={(e) =>
+							update((d) => {
+								d.person.languages = e.target.value.split(",");
+							})
+						}
+					/>
+				</label>
 			</fieldset>
 
 			{/* About */}
@@ -183,14 +195,14 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 						<input
 							className={field}
 							placeholder="tags (comma separated)"
-							value={sk.tags.map((t) => t.name).join(", ")}
+							value={sk.tags.map((t) => t.name).join(",")}
 							onChange={(e) =>
 								update((d) => {
+									// Keep icons already chosen for a tag; only new names get the default.
+									const icons = new Map(d.skills[i].tags.map((t) => [t.name.trim(), t.icon]));
 									d.skills[i].tags = e.target.value
 										.split(",")
-										.map((t) => t.trim())
-										.filter(Boolean)
-										.map((name) => ({ name, icon: "rocket" }));
+										.map((name) => ({ name, icon: icons.get(name.trim()) ?? "rocket" }));
 								})
 							}
 						/>
@@ -280,13 +292,10 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 						<input
 							className={field}
 							placeholder="tags (comma separated)"
-							value={p.tags.join(", ")}
+							value={p.tags.join(",")}
 							onChange={(e) =>
 								update((d) => {
-									d.projects[i].tags = e.target.value
-										.split(",")
-										.map((t) => t.trim())
-										.filter(Boolean);
+									d.projects[i].tags = e.target.value.split(",");
 								})
 							}
 						/>
@@ -306,9 +315,9 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 								</button>
 							</div>
 							{p.links.map((lnk, j) => (
-								<div key={j} className="flex gap-2">
+								<div key={j} className="flex flex-wrap items-center gap-2">
 									<input
-										className={`${field} w-40 shrink-0`}
+										className={`${field} w-full shrink-0 sm:w-36`}
 										list="project-link-labels"
 										placeholder="label"
 										value={lnk.label}
@@ -319,7 +328,8 @@ export function AdminForm({ initial }: { initial: PortfolioContent }) {
 										}
 									/>
 									<input
-										className={field}
+										className={`${field} w-auto min-w-0 flex-1`}
+										type="url"
 										placeholder="https://…"
 										value={lnk.url}
 										onChange={(e) =>

@@ -35,6 +35,24 @@ describe("content.ts", () => {
 		expect(again.person.role).toBe("Updated Role");
 	});
 
+	it("trims and drops empty entries in the free-text list fields", async () => {
+		freshFile();
+		const c = await getContent();
+		c.skills[0].tags = [
+			{ name: " React ", icon: "react" },
+			{ name: "", icon: "rocket" },
+		];
+		c.projects[0].tags = [" Next.js ", ""];
+		c.experience[0].achievements = [" shipped it ", ""];
+		c.person.languages = [" English ", ""];
+		await saveContent(c);
+		const again = await getContent();
+		expect(again.skills[0].tags).toEqual([{ name: "React", icon: "react" }]);
+		expect(again.projects[0].tags).toEqual(["Next.js"]);
+		expect(again.experience[0].achievements).toEqual(["shipped it"]);
+		expect(again.person.languages).toEqual(["English"]);
+	});
+
 	it("rejects invalid content without writing", async () => {
 		const file = freshFile();
 		const before = fs.readFileSync(file, "utf8");
